@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:yousandi.cn,2023:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 515db994cadbafd4f8e5f998d962a5b9, type: 3}
+  m_Name: Pistol
+  m_EditorClassIdentifier: 
+  itemName: "\u624B\u67AA"
+  icon: {fileID: 21300000, guid: 5b8b18250f64bde46835934ee78e17de, type: 3}
+  itemType: 0
+  canDiscard: 0
+  canQuickUse: 1
+  canStack: 0
+  ammoType: {fileID: 11400000, guid: abb6aac2fa04b894c85d1f99b73f5e27, type: 2}

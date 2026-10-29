@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:yousandi.cn,2023:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 515db994cadbafd4f8e5f998d962a5b9, type: 3}
+  m_Name: Knife
+  m_EditorClassIdentifier: 
+  itemName: "\u5315\u9996"
+  icon: {fileID: 21300000, guid: 064a14f5a093fa14abc34af1ac0ed82f, type: 3}
+  itemType: 1
+  canDiscard: 0
+  canQuickUse: 1
+  canStack: 0
+  ammoType: {fileID: 0}

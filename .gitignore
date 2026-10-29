@@ -1,0 +1,50 @@
+# Unity 自动生成目录，不入库
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/[Mm]emoryCaptures/
+
+# 编辑器缓存
+/.vs/
+/.gradle/
+.idea/
+
+# Unity/IDE 自动生成文件
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# 崩溃/系统文件
+sysinfo.txt
+.DS_Store
+
+# 打包产物
+*.apk
+*.aab
+*.unitypackage
+
+# 第三方下载素材与插件（商店可重新下载，不入库）
+/Assets/download/
+/Assets/MapMagic/
+/Assets/TextMesh Pro/
+/Assets/Samples/
+/Assets/Stylized Explosives/
+/Assets/StylishEsper/
+
+# 超大字体文件（超 GitHub 100MB 单文件上限）
+/Assets/KeyMaterial/SourceHanSansCN-Regular SDF.asset

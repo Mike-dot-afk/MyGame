@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:yousandi.cn,2023:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 515db994cadbafd4f8e5f998d962a5b9, type: 3}
+  m_Name: Grenade
+  m_EditorClassIdentifier: 
+  itemName: "\u624B\u96F7"
+  icon: {fileID: 21300000, guid: f2400337b1d05764096678d083b9e9a3, type: 3}
+  itemType: 5
+  canDiscard: 1
+  canQuickUse: 0

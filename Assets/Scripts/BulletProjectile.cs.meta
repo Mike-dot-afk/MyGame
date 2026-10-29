@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: D3pM4SKpVHvk0ZAJdKrGt46KT68spBq0QYwMVGK+g806aFlLS0d/4xE=
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - vfxHitYellow: {fileID: 4163288609089604275, guid: feca28422fc9a5240993eed790df0180, type: 3}
+  - vfxHitRed: {fileID: 1745204578563349227, guid: d0ee11761a4137645a9a1b0bd1ea7e53, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
