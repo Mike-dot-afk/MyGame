@@ -53,6 +53,8 @@ public class StartGameFlow : MonoBehaviour
 
     // ===== 游戏尚未启动（未点击开始按钮）的锁定计数器 =====
     private static int _gameNotStartedCounter;
+    // 游戏开始事件：点击开始按钮或新游戏确认后触发，供UI隐藏开始界面按钮
+    public static System.Action OnGameStarted;
 
     /// <summary>游戏还未点击开始按钮，锁定暂停等系统（仿CG机制）</summary>
     public static void LockBeforeGameStart()
@@ -232,6 +234,10 @@ public class StartGameFlow : MonoBehaviour
     void OnClickStartGame()
     {
         UnlockAfterGameStart();
+        if (OnGameStarted != null)
+        {
+            OnGameStarted();
+        }
         startGameBtn.gameObject.SetActive(false);
         if (_rainAudioSource != null && rainAmbientClip != null && !_rainIsFading)
         {
@@ -287,6 +293,14 @@ public class StartGameFlow : MonoBehaviour
         }
         else
         {
+            // 检查点档数据不存在时(存档被删除或损坏)，重建出生点档并直接开始游戏
+            string checkpointTestKey = $"{SaveSystem.CheckpointSaveSlot}_43436c19-29cd-41f4-9299-0d7f5b910da6_HP";
+            int checkpointHp = SaveFileManager.Instance.LoadData<int>(checkpointTestKey, -999);
+            if (checkpointHp == -999)
+            {
+                ExecuteGameStartLogic();
+                return;
+            }
             if (HpBarCanvas != null)
             {
                 HpBarCanvas.SetActive(true);
@@ -406,6 +420,12 @@ public class StartGameFlow : MonoBehaviour
         }
     }
 
+    // 新游戏按钮调用：重置开场CG标志后，直接走完整开始流程(播开场CG)
+    public void StartNewGame()
+    {
+        ResetCGPlayedFlag();
+        OnClickStartGame();
+    }
     public static void ForceClearFightPauseCounter()
     {
         _fightPauseCounter = 0;
