@@ -28,6 +28,13 @@ public class CutsceneSignalReceiver : MonoBehaviour
         Instance = this;
     }
 
+    private void Start()
+    {
+        // 注册CG战斗BGM到统一音频控制器，UI打开时压低
+        if (AudioManager.Instance != null && combatBgmAudioSource != null)
+            AudioManager.Instance.RegisterBGM(combatBgmAudioSource);
+    }
+
     // 把这个函数拖进Signal Emitter的事件槽，信号触发就执行
     public void OnPlayCgVoice()
     {

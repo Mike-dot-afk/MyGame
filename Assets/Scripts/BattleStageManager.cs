@@ -63,6 +63,9 @@ public class BattleStageManager : SaveableEntity
 
     protected override void Start()
     {
+        // 注册战斗BGM到统一音频控制器，UI打开时压低
+        if (AudioManager.Instance != null && _bgmAudioSource != null)
+            AudioManager.Instance.RegisterBGM(_bgmAudioSource);
         // LoadData由外部SaveSystem.LoadGame调用，此处不手动调用
         if (battleComplete)
             return;
@@ -98,7 +101,15 @@ public class BattleStageManager : SaveableEntity
         // ==========方案A：根据Time.timeScale自动暂停/恢复BGM==========
         if (_bgmAudioSource != null)
         {
-            if (Time.timeScale < 0.01f)
+            if (AudioManager.UIAudioPaused)
+            {
+                if (_bgmPausedByTimeScale)
+                {
+                    _bgmAudioSource.UnPause();
+                    _bgmPausedByTimeScale = false;
+                }
+            }
+            else if (Time.timeScale < 0.01f)
             {
                 if (!_bgmPausedByTimeScale && _bgmAudioSource.isPlaying)
                 {

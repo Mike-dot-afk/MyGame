@@ -83,11 +83,12 @@ public class VoiceSubtitlePlayer : MonoBehaviour
             voiceAudioSource.clip = item.voiceClip;
             voiceAudioSource.Play();
 
-            //1、等待本条音频播放完毕
+            //1、等待本条音频播放完毕（UI打开暂停语音时计时冻结，字幕保持显示）
             float audioRemain = item.voiceClip.length;
             while (audioRemain > 0)
             {
-                audioRemain -= Time.unscaledDeltaTime;
+                if (!AudioManager.UIAudioPaused)
+                    audioRemain -= Time.unscaledDeltaTime;
                 yield return null;
             }
             voiceAudioSource.Stop();
@@ -99,7 +100,8 @@ public class VoiceSubtitlePlayer : MonoBehaviour
                 float pauseRemain = item.afterPause;
                 while (pauseRemain > 0)
                 {
-                    pauseRemain -= Time.unscaledDeltaTime;
+                    if (!AudioManager.UIAudioPaused)
+                        pauseRemain -= Time.unscaledDeltaTime;
                     yield return null;
                 }
                 // afterPause到点，立刻切换，旧字幕直接覆盖，牺牲最小显示时间
@@ -114,7 +116,8 @@ public class VoiceSubtitlePlayer : MonoBehaviour
                 {
                     while (needWait > 0)
                     {
-                        needWait -= Time.unscaledDeltaTime;
+                        if (!AudioManager.UIAudioPaused)
+                            needWait -= Time.unscaledDeltaTime;
                         yield return null;
                     }
                 }

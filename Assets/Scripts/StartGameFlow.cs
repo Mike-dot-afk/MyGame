@@ -228,6 +228,12 @@ public class StartGameFlow : MonoBehaviour
         {
             _rainVfxAudioSource = rainVfxObject.GetComponent<AudioSource>();
         }
+        // 注册雨声源到统一音频控制器，UI打开时压低
+        if (AudioManager.Instance != null)
+        {
+            if (_rainAudioSource != null) AudioManager.Instance.RegisterBGM(_rainAudioSource);
+            if (_rainVfxAudioSource != null) AudioManager.Instance.RegisterBGM(_rainVfxAudioSource);
+        }
         LockBeforeGameStart();
     }
 

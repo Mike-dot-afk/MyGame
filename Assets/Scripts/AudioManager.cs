@@ -14,6 +14,16 @@ public class AudioManager : MonoBehaviour
     private int currentIndex = 0;
     private int active3DSoundCount = 0;
 
+    // ===== UI音频统一管理 =====
+    // BGM源注册表，UI打开时压低音量而不是暂停
+    private List<AudioSource> _bgmSources = new List<AudioSource>();
+    // 记录进入UI前各BGM源的原始音量，用于关闭UI后恢复
+    private Dictionary<AudioSource, float> _bgmOriginalVolumes = new Dictionary<AudioSource, float>();
+    // UI打开时被暂停的音效源，用于关闭UI后继续播放
+    private HashSet<AudioSource> _pausedSfx = new HashSet<AudioSource>();
+    // UI打开状态标记，供BattleStageManager和字幕计时判断
+    public static bool UIAudioPaused { get; private set; }
+
     [Header("全局设置")]
     [Range(0f, 1f)]
     public float masterVolume = 1f;
@@ -113,6 +123,68 @@ public class AudioManager : MonoBehaviour
         }
 
         return audioSourcePool[startIndex];
+    }
+
+    /// <summary>注册BGM源，UI打开时它被压低而不是暂停</summary>
+    public void RegisterBGM(AudioSource src)
+    {
+        if (src != null && !_bgmSources.Contains(src))
+            _bgmSources.Add(src);
+    }
+
+    /// <summary>UI打开：压低所有BGM，暂停场景中其余全部音效源</summary>
+    public void PauseAllForUI()
+    {
+        if (UIAudioPaused) return;
+        UIAudioPaused = true;
+
+        // 1. 压低BGM音量
+        _bgmOriginalVolumes.Clear();
+        foreach (AudioSource src in _bgmSources)
+        {
+            if (src == null) continue;
+            _bgmOriginalVolumes[src] = src.volume;
+            src.volume = 0.3f;
+        }
+
+        // 2. 暂停所有非BGM的音效源，记录暂停列表
+        _pausedSfx.Clear();
+        AudioSource[] allSources = FindObjectsOfType<AudioSource>(true);
+        foreach (AudioSource src in allSources)
+        {
+            if (src == null) continue;
+            if (_bgmSources.Contains(src)) continue;
+            if (src.isPlaying)
+            {
+                src.Pause();
+                _pausedSfx.Add(src);
+            }
+        }
+    }
+
+    /// <summary>UI关闭：恢复BGM音量，继续播放被暂停的音效</summary>
+    public void ResumeAllForUI()
+    {
+        if (!UIAudioPaused) return;
+        UIAudioPaused = false;
+
+        // 1. 恢复BGM原始音量
+        foreach (AudioSource src in _bgmSources)
+        {
+            if (src == null) continue;
+            float vol;
+            if (_bgmOriginalVolumes.TryGetValue(src, out vol))
+                src.volume = vol;
+        }
+        _bgmOriginalVolumes.Clear();
+
+        // 2. 继续播放被暂停的音效
+        foreach (AudioSource src in _pausedSfx)
+        {
+            if (src != null)
+                src.UnPause();
+        }
+        _pausedSfx.Clear();
     }
 
     public void StopAllSFX()

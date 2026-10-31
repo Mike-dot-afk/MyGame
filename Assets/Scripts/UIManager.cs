@@ -55,6 +55,12 @@ public class UIManager : MonoBehaviour
         }
         Cursor.lockState = isOpen ? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = isOpen;
+        // UI音频统一管理：打开时压低BGM并暂停音效，关闭时恢复
+        if (AudioManager.Instance != null)
+        {
+            if (isOpen) AudioManager.Instance.PauseAllForUI();
+            else AudioManager.Instance.ResumeAllForUI();
+        }
     }
     // 供玩家脚本调用：血量变化时更新血条
     public void OnPlayerHPChanged(int currentHp, int maxHp)
